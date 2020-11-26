@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>TextHighlighter</title>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400|Special+Elite' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="assets/reset.css" />
+  <link rel="stylesheet" type="text/css" href="assets/styles.css" />
+  <link rel="stylesheet" type="text/css" href="assets/github.css" />
+  <link rel="stylesheet" type="text/css" href="assets/ColorPicker.css" />
+
+  <script type="text/javascript" src="assets/rainbow-custom.min.js"></script>
+
+  <script type="text/javascript" src="assets/ColorPicker.js"></script>
+  <script type="text/javascript" src="./src/TextHighlighter.js"></script>
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<body>
+  <div id="start">
+
+
+
+
+    <div class="view">
+      <div class="top"></div>
+
+      <div class="side">
+        <h2>coloral feedback</h2>
+        <ul>
+
+          <li>Change highlighting color: <div class="color-picker"></div>
+          </li>
+          <button  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button>
+        </ul>
+      </div>
+
+      <div class="card show" id="editor" contentEditable="true" height:"500" width="500">
+        <p  style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;" class="text">paste here</p>
+
+
+      </div>
+
+      <a href="#" onclick="generatePDF()" class="buttonDownload">Download</a>
+<div class="parameter">
+
+
+        <!-- Editable table -->
+
+            <div id="table" class="table-editable">
+              <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+              <table class="table table-bordered table-responsive-md table-striped text-center">
+                <thead>
+                  <tr>
+                    <th class="text-center">Parameter</th>
+                    <th class="text-center">marks</th>
+
+                    <th class="text-center">Color</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="pt-3-half" contenteditable="true">Good</td>
+                    <td class="pt-3-half" contenteditable="true">9</td>
+
+
+
+                    <td>
+                      <span class="table-remove"><button type="button" class="button-1"></button></span>
+                    </td>
+                  </tr>
+                  <!-- This is our clonable table line -->
+                  <tr>
+                    <td class="pt-3-half" contenteditable="true">out of context</td>
+                    <td class="pt-3-half" contenteditable="true">3</td>
+
+
+                    <td>
+                      <span class="table-remove"><button type="button" class="button-2"></button></span>
+                    </td>
+                  </tr>
+                  <!-- This is our clonable table line -->
+                  <tr>
+                    <td class="pt-3-half" contenteditable="true">Bad</td>
+                    <td class="pt-3-half" contenteditable="true">0</td>
+
+
+                    <td>
+                      <span class="table-remove"><button type="button" class="button-3"></button></span>
+                    </td>
+                  </tr>
+                  <!-- This is our clonable table line -->
+                  <tr >
+                    <td class="pt-3-half" contenteditable="true">Grammer mistake</td>
+                    <td class="pt-3-half" contenteditable="true">6</td>
+
+
+                    <td>
+                      <span class="table-remove"><button type="button" class="button-4"></button></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+        <!-- Editable table -->
+</div>
+      </div>
+
+      <div id="footer">
+
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var text = document.querySelector('.text').innerText;
+      var textLength = text.trim().length;
+      // document.getElementById("text").innerHTML =textLength;
+
+
+      (function() {
+        var removeBtn = document.getElementById('remove');
+        var text = document.getElementById('editor')
+        var colors = new ColorPicker(document.querySelector('.color-picker'));
+        var hltr = new TextHighlighter(text);
+
+        colors.onColorChange(function(color) {
+          hltr.setColor(color);
+        });
+
+        removeBtn.addEventListener('click', function() {
+          hltr.removeHighlights();
+        });
+      })();
+
+      function generatePDF() {
+        const element = document.getElementById("editor");
+        html2pdf()
+          .from(element)
+          .save();
+
+      }
+
+    </script>
+
+</body>
+
+</html>
