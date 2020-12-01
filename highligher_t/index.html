@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Coloral Feedback</title>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400|Special+Elite' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" type="text/css" href="assets/styles.css" />
+
+  <link rel="stylesheet" type="text/css" href="assets/ColorPicker.css" />
+
+  <script type="text/javascript" src="assets/rainbow-custom.min.js"></script>
+
+  <script type="text/javascript" src="assets/ColorPicker.js"></script>
+    <script type="text/javascript" src="assets/html2pdf.bundle.js"></script>
+  <script type="text/javascript" src="./src/TextHighlighter.js"></script>
+
+
+
+
+
+  </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.js">
+
+  </script>
+
+
+</head>
+
+<body>
+  <script type="text/javascript">
+  function downloadimage() {
+          //var container = document.getElementById("image-wrap"); //specific element on page
+          var container = document.getElementById("table");; // full page
+          html2canvas(container, { allowTaint: true }).then(function (canvas) {
+
+              var link = document.createElement("a");
+              document.body.appendChild(link);
+              link.download = "parameter_Table.jpg";
+              link.href = canvas.toDataURL();
+              link.target = '_blank';
+                link.click();
+
+          });
+      }
+
+  </script>
+
+
+
+
+  <div class="view">
+    <div class="top"></div>
+
+    <div class="side">
+      <h2>coloral feedback</h2>
+      <ul>
+        <li>Change highlighting color: <div class="color-picker"></div>
+        </li>
+        <button id="remove" class="btn btn-danger btn-rounded btn-sm my-0">Remove</button>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p id="editor"  style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;" class="text" contentEditable="true">paste here</p>
+
+
+    </div>
+
+    <a href="#" onclick="generatePDF() " class="buttonDownload">Download</a>
+    <button onclick="downloadimage()" class="clickbtn">table</button>
+    
+    <div class="parameter">
+
+
+      <!-- Editable table -->
+
+      <div id="table" class="table-editable">
+        <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <thead>
+            <tr>
+              <th class="text-center">Parameter</th>
+
+
+              <th class="text-center">Color</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="pt-3-half" contenteditable="true">Good</td>
+
+
+
+
+              <td>
+                <span class="table-remove"><button type="button" class="button-1"></button></span>
+              </td>
+            </tr>
+            <!-- This is our clonable table line -->
+
+            <tr>
+              <td class="pt-3-half" contenteditable="true">out of context</td>
+
+
+
+              <td>
+                <span class="table-remove"><button type="button" class="button-2"></button></span>
+              </td>
+            </tr>
+            <!-- This is our clonable table line -->
+            <tr>
+              <td class="pt-3-half" contenteditable="true">Bad</td>
+
+
+
+              <td>
+                <span class="table-remove"><button type="button" class="button-3"></button></span>
+              </td>
+            </tr>
+            <!-- This is our clonable table line -->
+            <tr>
+              <td class="pt-3-half" contenteditable="true">Grammer mistake</td>
+
+
+
+              <td>
+                <span class="table-remove"><button type="button" class="button-4"></button></span>
+              </td>
+            </tr>
+            <tr>
+              <td class="pt-3-half" contenteditable="true">xxxx </td>
+              <td>
+                <span class="table-remove"><button type="button" class="button-5"></button></span>
+              </td>
+            </tr>
+            <tr>
+              <td class="pt-3-half" contenteditable="true">xxxx</td>
+              <td>
+                <span class="table-remove"><button type="button" class="button-6"></button></span>
+              </td>
+            </tr>
+            <tr>
+              <td class="pt-3-half" contenteditable="true">xxxx</td>
+              <td>
+                <span class="table-remove"><button type="button" class="button-7"></button></span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+        <!-- Editable table -->
+      </div>
+    </div>
+
+    <div id="footer">
+
+
+
+</div>
+    <script type="text/javascript">
+
+      // document.getElementById("text").innerHTML =textLength;
+
+
+      (function() {
+        var removeBtn = document.getElementById('remove');
+
+        var text = document.getElementById('editor')
+        var colors = new ColorPicker(document.querySelector('.color-picker'));
+        var hltr = new TextHighlighter(text);
+
+        colors.onColorChange(function(color) {
+          hltr.setColor(color);
+        });
+
+        removeBtn.addEventListener('click', function() {
+          hltr.removeHighlights();
+        });
+      })();
+
+      function generatePDF() {//var container = document.getElementById("image-wrap"); //specific element on page
+
+
+        var element = document.getElementById("editor");
+        var opt = {
+  margin:       1,
+  filename:     'myfile.pdf',
+  image:        { type: 'jpeg' },
+  html2canvas:  { scale: 1 },
+  jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+};
+
+
+
+html2pdf().set(opt).from(element).save();
+
+
+}
+    </script>
+
+</body>
+
+</html>
